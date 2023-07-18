@@ -1,0 +1,38 @@
+// ==UserScript==
+// @name         BV号跳转
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://*/*
+// @match        http://*/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    var button = document.createElement("button");
+    button.innerHTML = "跳转到B站";
+    button.style.position = "fixed";
+    button.style.display = "none"; // 初始状态下按钮不可见
+    document.body.appendChild(button);
+
+    document.addEventListener("mouseup", function(event) {
+        var selectedText = window.getSelection().toString();
+        var firstTwoLetters = selectedText.slice(0, 2);
+        if (firstTwoLetters === "BV") {
+            button.style.display = "block"; // 当选中文字以"BV"开头时显示按钮
+            button.style.left = event.pageX + "px";
+            button.style.top = event.pageY + "px";
+        }
+        button.addEventListener("click", function() {
+            window.open("https://www.bilibili.com/" + selectedText, "_blank"); // 点击按钮跳转到bilibili.com
+        });
+        console.log(selectedText)
+        document.addEventListener("mousedown", function() {
+            button.style.display = "none"; // 点击页面的任意位置时隐藏按钮
+        });
+    });
+
+})();
