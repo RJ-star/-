@@ -15,18 +15,30 @@
     document.addEventListener("mouseup", function(event) {
         var selectedText = window.getSelection().toString();
         var firstTwoLetters = selectedText.slice(0, 2);
-        if (firstTwoLetters === "BV") {
-            var button = document.createElement("button");
+        var button = document.createElement("button");
+        if (firstTwoLetters === "BV" || firstTwoLetters === "CV") {
+            console.log(selectedText)
             button.innerHTML = "跳转到B站";
-            button.style.position = "fixed";
+            button.style.position = "absolute";
             button.style.left = event.pageX + "px";
             button.style.top = event.pageY + "px";
+            button.style.backgroundColor = "#eacfbb";
+            button.style.border = "none";
+            button.style.color = "#000000";
+            button.style.padding = "10px 20px";
+            button.style.borderRadius = "10px";
+            console.log(1, selectedText)
+            button.style.display = "block";
             button.addEventListener("click", function() {
                 window.open("https://www.bilibili.com/" + selectedText, "_blank");
                 button.style.display = "none";
+                selectedText = null;
             });
             document.body.appendChild(button);
         }
+        document.addEventListener("mouseup", function() {
+            button.style.display = "none";
+        })
     });
 
 })();
